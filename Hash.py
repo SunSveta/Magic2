@@ -38,16 +38,26 @@ todo_list = []
 # len([item for item in todo_list if not item])
 
 class TodoList():
-    def __init__(self):
+    def __init__(self, start=0, stop = 2, step = 1):
         self.tasks = [None]*2  #Ничего умнее я не придумала с учетом того,
         #что в наших уроках ВООБЩЕ никак и нигде никто не объяснил, как делать вложенные классы,
         #а в гугле непонятно все.
+        self.start = start
+        self.stop = stop
+        self.step = step
+        self.value = self.start - self.step
 
+    def __next__(self):
+        if self.value + self.step < self.stop:
+            self.value += self.step
+            return self.tasks[self.value]
+        else:
+            raise StopIteration
     def __setitem__(self, key, value):
         self.tasks[key] = value
 
-    def __getitem__(self, item):
-        return self.tasks[item]
+    # def __getitem__(self, item):
+    #     return self.tasks[item]
 
     def __delitem__(self, key):
         del self.tasks[key]
